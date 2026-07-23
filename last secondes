@@ -1,0 +1,518 @@
+extends CharacterBody2D
+
+@export var speed := 250.0
+@export var jump_force := -420.0
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+func _physics_process(delta):
+	if !is_on_floor():
+		velocity.y += gravity * delta
+	var direction = Input.get_axis("left","right")
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = jump_force
+	velocity.x = direction * speed
+	move_and_slide()
+
+uid://dr8yoisprmyvc
+
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="last seconds"
+run/main_scene="uid://bbptvq6lhluxm"
+config/features=PackedStringArray("4.7", "Mobile")
+config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[input]
+
+left={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194319,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+right={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194321,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+jump={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":32,"location":0,"echo":false,"script":null)
+]
+}
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
+renderer/rendering_method="mobile"
+
+[gd_scene format=3 uid="uid://bbptvq6lhluxm"]
+
+[ext_resource type="Script" uid="uid://dr8yoisprmyvc" path="res://player.gd" id="1_bah7m"]
+[ext_resource type="Texture2D" uid="uid://cpteasb8q6l35" path="res://ChatGPT Image 7 juin 2026, 15_51_27.png" id="2_p1v5b"]
+[ext_resource type="Texture2D" uid="uid://crwk8fj61tlqk" path="res://ChatGPT Image 7 juin 2026, 16_04_57.png" id="4_js7pq"]
+[ext_resource type="Script" uid="uid://bsgakudwv6rft" path="res://goal.gd" id="4_p1v5b"]
+[ext_resource type="Script" uid="uid://bpitrsak4ne4f" path="res://game_manager.gd" id="6_wygdx"]
+[ext_resource type="Texture2D" uid="uid://dpbq77t0y60rc" path="res://Capture d'écran 2026-07-23 000917.png" id="7_wygdx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_utshk"]
+size = Vector2(303, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0cvp5"]
+size = Vector2(21, 31)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s7wsd"]
+radius = 12.369317
+
+[node name="main" type="Node2D" unique_id=1405912449]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=307480095]
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=1781140417]
+position = Vector2(423, 381)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=1007283905]
+position = Vector2(-7, 0)
+shape = SubResource("RectangleShape2D_utshk")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground" unique_id=1106572521]
+position = Vector2(-6, 44)
+scale = Vector2(1.304721, 0.16216214)
+texture = ExtResource("7_wygdx")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1719818343]
+position = Vector2(313, 344)
+script = ExtResource("1_bah7m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=420281134]
+position = Vector2(-1, -13)
+shape = SubResource("RectangleShape2D_0cvp5")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1108166127]
+position = Vector2(0, -11.000002)
+scale = Vector2(0.05859376, 0.063232414)
+texture = ExtResource("2_p1v5b")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1821763795]
+position = Vector2(2, -38)
+enabled = true
+
+[node name="Goal" type="Area2D" parent="." unique_id=1358522872]
+position = Vector2(713, 349)
+script = ExtResource("4_p1v5b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal" unique_id=700610654]
+position = Vector2(9, -3)
+shape = SubResource("CircleShape2D_s7wsd")
+
+[node name="Sprite2D" type="Sprite2D" parent="Goal" unique_id=1463197879]
+position = Vector2(6.9998474, 1.0000305)
+scale = Vector2(0.04321288, 0.041503906)
+texture = ExtResource("4_js7pq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1551318513]
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer" unique_id=123560691]
+offset_left = -29.0
+offset_top = -113.0
+offset_right = 11.0
+offset_bottom = -90.0
+
+[node name="Message" type="Label" parent="CanvasLayer" unique_id=390434691]
+offset_left = 230.0
+offset_top = -108.0
+offset_right = 270.0
+offset_bottom = -85.0
+
+[node name="GameManager" type="Node" parent="." unique_id=519458043]
+script = ExtResource("6_wygdx")
+
+[connection signal="body_entered" from="Goal" to="Goal" method="_on_body_entered"]
+
+root = true
+
+[*]
+charset = utf-8
+
+# Normalize EOL for all files that Git considers text files.
+* text=auto eol=lf
+
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://bc03ifenh54y"
+path="res://.godot/imported/Biker_doublejump.png-10686a3fa166565051c09dd56728b808.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Biker_doublejump.png"
+dest_files=["res://.godot/imported/Biker_doublejump.png-10686a3fa166565051c09dd56728b808.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1
+
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://c88lxyfhw8uks"
+path="res://.godot/imported/Biker_idle.png-c4363697f8ff7cd5f85e25b408c3d6bc.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Biker_idle.png"
+dest_files=["res://.godot/imported/Biker_idle.png-c4363697f8ff7cd5f85e25b408c3d6bc.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1
+
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://cvhebw7wg4lrp"
+path="res://.godot/imported/Biker_jump.png-6c991cd2aa55600e30069a3b4fcacd05.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Biker_jump.png"
+dest_files=["res://.godot/imported/Biker_jump.png-6c991cd2aa55600e30069a3b4fcacd05.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1
+
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://s3asuwuuv6c6"
+path="res://.godot/imported/Biker_run.png-bd68dda196ab93bde9df54a84b341a76.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Biker_run.png"
+dest_files=["res://.godot/imported/Biker_run.png-bd68dda196ab93bde9df54a84b341a76.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1
+
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://dpbq77t0y60rc"
+path="res://.godot/imported/Capture d'écran 2026-07-23 000917.png-9b2200b52e380600a1c285b4b382e35a.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Capture d'écran 2026-07-23 000917.png"
+dest_files=["res://.godot/imported/Capture d'écran 2026-07-23 000917.png-9b2200b52e380600a1c285b4b382e35a.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1
+
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://cpteasb8q6l35"
+path="res://.godot/imported/ChatGPT Image 7 juin 2026, 15_51_27.png-57f1fee0ec3fdff1b7e2787250c9f146.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://ChatGPT Image 7 juin 2026, 15_51_27.png"
+dest_files=["res://.godot/imported/ChatGPT Image 7 juin 2026, 15_51_27.png-57f1fee0ec3fdff1b7e2787250c9f146.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1
+
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://crwk8fj61tlqk"
+path="res://.godot/imported/ChatGPT Image 7 juin 2026, 16_04_57.png-d98a62fbc3e6f90bdda06610ce1f7798.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://ChatGPT Image 7 juin 2026, 16_04_57.png"
+dest_files=["res://.godot/imported/ChatGPT Image 7 juin 2026, 16_04_57.png-d98a62fbc3e6f90bdda06610ce1f7798.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1
+
+extends Node
+
+@export var time := 10
+
+@onready var label = $"../CanvasLayer/TimeLabel"
+
+func _process(delta):
+
+	time -= delta
+
+	label.text = str(int(ceil(time)))
+
+	if time <= 0:
+		get_tree().reload_current_scene()
+
+uid://bpitrsak4ne4f
+
+extends Area2D
+
+func _on_body_entered(body):
+	if body.name == "Player":
+		get_tree().change_scene_to_file("res://World.tscn")
+
+uid://bsgakudwv6rft
+
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128"><rect width="124" height="124" x="2" y="2" fill="#363d52" stroke="#212532" stroke-width="4" rx="14"/><g fill="#fff" transform="translate(12.322 12.322)scale(.101)"><path d="M105 673v33q407 354 814 0v-33z"/><path fill="#478cbf" d="m105 673 152 14q12 1 15 14l4 67 132 10 8-61q2-11 15-15h162q13 4 15 15l8 61 132-10 4-67q3-13 15-14l152-14V427q30-39 56-81-35-59-83-108-43 20-82 47-40-37-88-64 7-51 8-102-59-28-123-42-26 43-46 89-49-7-98 0-20-46-46-89-64 14-123 42 1 51 8 102-48 27-88 64-39-27-82-47-48 49-83 108 26 42 56 81zm0 33v39c0 276 813 276 814 0v-39l-134 12-5 69q-2 10-14 13l-162 11q-12 0-16-11l-10-65H446l-10 65q-4 11-16 11l-162-11q-12-3-14-13l-5-69z"/><path d="M483 600c0 34 58 34 58 0v-86c0-34-58-34-58 0z"/><circle cx="725" cy="526" r="90"/><circle cx="299" cy="526" r="90"/></g><g fill="#414042" transform="translate(12.322 12.322)scale(.101)"><circle cx="307" cy="532" r="60"/><circle cx="717" cy="532" r="60"/></g></svg>
+
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://du11fyjboif80"
+path="res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://icon.svg"
+dest_files=["res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
