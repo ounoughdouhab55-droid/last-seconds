@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://bbptvq6lhluxm"]
+
+[ext_resource type="Script" uid="uid://dr8yoisprmyvc" path="res://player.gd" id="1_bah7m"]
+[ext_resource type="Texture2D" uid="uid://cpteasb8q6l35" path="res://ChatGPT Image 7 juin 2026, 15_51_27.png" id="2_p1v5b"]
+[ext_resource type="Texture2D" uid="uid://crwk8fj61tlqk" path="res://ChatGPT Image 7 juin 2026, 16_04_57.png" id="4_js7pq"]
+[ext_resource type="Script" uid="uid://bsgakudwv6rft" path="res://goal.gd" id="4_p1v5b"]
+[ext_resource type="Script" uid="uid://bpitrsak4ne4f" path="res://game_manager.gd" id="6_wygdx"]
+[ext_resource type="Texture2D" uid="uid://dpbq77t0y60rc" path="res://Capture d'écran 2026-07-23 000917.png" id="7_wygdx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_utshk"]
+size = Vector2(303, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0cvp5"]
+size = Vector2(21, 31)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s7wsd"]
+radius = 12.369317
+
+[node name="main" type="Node2D" unique_id=1405912449]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=307480095]
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=1781140417]
+position = Vector2(423, 381)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=1007283905]
+position = Vector2(-7, 0)
+shape = SubResource("RectangleShape2D_utshk")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground" unique_id=1106572521]
+position = Vector2(-6, 44)
+scale = Vector2(1.304721, 0.16216214)
+texture = ExtResource("7_wygdx")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1719818343]
+position = Vector2(313, 344)
+script = ExtResource("1_bah7m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=420281134]
+position = Vector2(-1, -13)
+shape = SubResource("RectangleShape2D_0cvp5")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1108166127]
+position = Vector2(0, -11.000002)
+scale = Vector2(0.05859376, 0.063232414)
+texture = ExtResource("2_p1v5b")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1821763795]
+position = Vector2(2, -38)
+enabled = true
+
+[node name="Goal" type="Area2D" parent="." unique_id=1358522872]
+position = Vector2(713, 349)
+script = ExtResource("4_p1v5b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal" unique_id=700610654]
+position = Vector2(9, -3)
+shape = SubResource("CircleShape2D_s7wsd")
+
+[node name="Sprite2D" type="Sprite2D" parent="Goal" unique_id=1463197879]
+position = Vector2(6.9998474, 1.0000305)
+scale = Vector2(0.04321288, 0.041503906)
+texture = ExtResource("4_js7pq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1551318513]
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer" unique_id=123560691]
+offset_left = -29.0
+offset_top = -113.0
+offset_right = 11.0
+offset_bottom = -90.0
+
+[node name="Message" type="Label" parent="CanvasLayer" unique_id=390434691]
+offset_left = 230.0
+offset_top = -108.0
+offset_right = 270.0
+offset_bottom = -85.0
+
+[node name="GameManager" type="Node" parent="." unique_id=519458043]
+script = ExtResource("6_wygdx")
+
+[connection signal="body_entered" from="Goal" to="Goal" method="_on_body_entered"]
